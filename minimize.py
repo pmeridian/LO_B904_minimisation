@@ -70,7 +70,7 @@ ranges={
 }
 
 minG={}
-minX=.7*ps.GetPositionX()[n_peaks-1]
+minX=max([.7*ps.GetPositionX()[n_peaks-1],1000])
 maxX=1.7*ps.GetPositionX()[n_peaks-1]
 min_bin=h_2.FindBin(minX)
 max_bin=h_2.FindBin(maxX)
