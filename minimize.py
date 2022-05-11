@@ -74,10 +74,12 @@ minX=max([.7*ps.GetPositionX()[n_peaks-1],1000])
 maxX=1.7*ps.GetPositionX()[n_peaks-1]
 min_bin=h_2.FindBin(minX)
 max_bin=h_2.FindBin(maxX)
+h_2.GetXaxis().SetRangeUser(minX,maxX)
+print("===> Fit range %d-%d"%(minX,maxX))
 init_values={}
 
 #init
-print("Init values")
+print("***** Init values")
 for ipar,(par,par_range) in enumerate(ranges.items()):
     minG[par]=R.TGraph()
     init_values[par]=par_range['ini']
@@ -90,7 +92,7 @@ tolerance=1
 min_diff=99999.
 iter=0
 
-print("Start minimisation with tolerance %f"%tolerance)
+print("***** Start minimisation with tolerance %f"%tolerance)
 
 watch=R.TStopwatch()
 while (abs(min_diff)>tolerance):
@@ -100,7 +102,7 @@ while (abs(min_diff)>tolerance):
         minG[par].Clear()
         for ini_par in ranges:
             tval[ini_par]=init_values[ini_par]
-        for ival,a in enumerate(np.arange(par_range['ini']-5*par_range['step'],par_range['ini']+5*par_range['step'],par_range['step'])):
+        for ival,a in enumerate(np.arange(init_values[par]-5*par_range['step'],init_values[par]+5*par_range['step'],par_range['step'])):
             tval[par]=a
             val=chi2_func(tval['norm'],tval['scale'],tval['smear'])
             print(iter,par,ival,tval,val)
@@ -147,7 +149,7 @@ h_2.SetMarkerColor(R.kBlack)
 h_2.SetLineColor(R.kBlack)
 h_2.Draw('PE')
 h_2.SetMaximum(h_2.GetMaximum()*1.6)
-h_2.GetXaxis().SetRangeUser(minX,maxX)
+
 h_2.GetXaxis().SetTitle('ADC')
 l.AddEntry(h_2,'Target','P')
 
