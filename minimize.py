@@ -71,7 +71,7 @@ ranges={
 
 minG={}
 minX=max([.7*ps.GetPositionX()[n_peaks-1],1000])
-maxX=1.7*ps.GetPositionX()[n_peaks-1]
+maxX=max([1.7*ps.GetPositionX()[n_peaks-1],2300])
 min_bin=h_2.FindBin(minX)
 max_bin=h_2.FindBin(maxX)
 h_2.GetXaxis().SetRangeUser(minX,maxX)
