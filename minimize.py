@@ -28,6 +28,8 @@ parser.add_argument('--run_target', default='479_HPK_CH08_OV1.0_Tm40_run166')
 parser.add_argument('--norm', type=float, default=5.8)
 parser.add_argument('--scale', type=float, default=0.765)
 parser.add_argument('--smear', type=float, default=230)
+parser.add_argument('--minX', type=float, default=-1)
+parser.add_argument('--maxX', type=float, default=-1)
 
 args = parser.parse_args()
 
@@ -72,6 +74,10 @@ ranges={
 minG={}
 minX=max([.7*ps.GetPositionX()[n_peaks-1],1000])
 maxX=max([1.7*ps.GetPositionX()[n_peaks-1],2300])
+if (args.minX>0):
+    minX=args.minX
+if (args.maxX>0):
+    maxX=args.maxX
 min_bin=h_2.FindBin(minX)
 max_bin=h_2.FindBin(maxX)
 h_2.GetXaxis().SetRangeUser(minX,maxX)
